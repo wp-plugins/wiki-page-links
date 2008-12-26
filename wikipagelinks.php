@@ -64,6 +64,16 @@ class WikiLinksPlugin {
 	function _uninstall() {
 	    $this->log("Wiki Links uninstalled!");
     }
+    
+    /**
+     * Added by Daniel Llewellyn (Fremen):
+     * separate out the viewed title from the link name from wikilinks of the form [[link|some user title]]
+     */
+    function wiki_get_piped_title($link) {
+   		list($link, $title) = split('\|', $link, 2);
+    	if (!$title) $title = $link;
+    	return array($link, $title);
+    }
 
 	/* The filter.
 	 * Replaces double brackets with links to pages.
@@ -84,41 +94,40 @@ class WikiLinksPlugin {
 			next($matches[0]);
 		}
 
-		foreach( array_keys($links) as $page_title ) {
-			
-			$match = $links[$page_title];
-
+		foreach( $links as $full_link => $match ) {
 			// If the "page title" contains a ':', it *may* be a shortcut
 			// link rather than a page.  Deal with those first.
-			list($prefix, $subtitle) = split(':', $page_title, 2);
+			list($prefix, $sublink) = split(':', $full_link, 2);
 
-			if ( $subtitle ) {
+			if ( $sublink ) {
 				if ( array_key_exists($prefix, $options['shortcuts']) ) {
+					list($link, $subtitle) = $this->wiki_get_piped_title($sublink);
 					$shortcutLink = sprintf( $options['shortcuts'][$prefix],
-						$subtitle);
+						$link);
 					$content = str_replace($match, 
 						"<a href='$shortcutLink'>$subtitle</a>",
 						$content);
 					continue;
 				}
-			} 
+			}
+			
+			list($link, $page_title) = $this->wiki_get_piped_title($full_link);
 
 			//We have a page link. 
 			//TODO: cut down on db hits and get the list of pages instead.
-			$page = get_page_by_title($page_title);
-			if ( isset($page) ) {
+			if ( $page = get_page_by_title($link) ) {
 				$content = str_replace($match, 
 					"<a href='". get_permalink($page->ID) ."'>$page_title</a>",
 					$content);
 			} else {
 				//TODO: If an editor is logged in, replace with a link
 				//to create a new page.
-				$content = str_replace($match, $page_title, $content);
+				$home = get_option('home');
+				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/page-new.php?post_title=$link' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
 			}
 		}
-
+		
 		return $content;
-
 	}
 
     function getAdminOptions() {
