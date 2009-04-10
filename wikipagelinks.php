@@ -103,7 +103,7 @@ class WikiLinksPlugin {
 				if ( array_key_exists($prefix, $options['shortcuts']) ) {
 					list($link, $subtitle) = $this->wiki_get_piped_title($sublink);
 					$shortcutLink = sprintf( $options['shortcuts'][$prefix],
-						$link);
+						rawurlencode($link));
 					$content = str_replace($match, 
 						"<a href='$shortcutLink'>$subtitle</a>",
 						$content);
@@ -115,15 +115,17 @@ class WikiLinksPlugin {
 
 			//We have a page link. 
 			//TODO: cut down on db hits and get the list of pages instead.
-			if ( $page = get_page_by_title($link) ) {
+			if ( $page = get_page_by_title(html_entity_decode($link, ENT_QUOTES)) ) {
 				$content = str_replace($match, 
 					"<a href='". get_permalink($page->ID) ."'>$page_title</a>",
 					$content);
 			} else {
-				//TODO: If an editor is logged in, replace with a link
-				//to create a new page.
+				//Add a link to create the page if it doesn't exist.
+				//TODO: Hide/give the option to hide link for non-logged in 
+				//users.
 				$home = get_option('home');
-				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/page-new.php?post_title=$link' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
+				$encodedlink = urlencode($link);
+				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/page-new.php?post_title=$encodedlink' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
 			}
 		}
 		
