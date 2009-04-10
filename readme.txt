@@ -4,7 +4,7 @@ Donate link: http://www.flyingsquirrel.ca/index.php/wordpress-plugins/wiki-links
 Tags: wiki, pages
 Requires at least: 2.1
 Tested up to: 2.7.1
-Stable tag: 0.2
+Stable tag: 0.3
 
 [[Wiki Page Links]] is a WordPress plug-in that allows you to add Wikipedia-style hyperlinks to your posts and pages and automatically have them link to your WordPress pages.
 
