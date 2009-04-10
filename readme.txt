@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: Darcy Casselman, Daniel Llewellyn 
+Contributors: Darcy Casselman, Fremen
 Donate link: http://www.flyingsquirrel.ca/index.php/wordpress-plugins/wiki-links/
 Tags: wiki, pages
 Requires at least: 2.1
