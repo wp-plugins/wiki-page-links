@@ -123,7 +123,7 @@ class WikiLinksPlugin {
 				//Add a link to create the page if it doesn't exist.
 				//TODO: Hide/give the option to hide link for non-logged in 
 				//users.
-				$home = get_option('home');
+				$home = get_option('siteurl');
 				$encodedlink = urlencode($link);
 				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/page-new.php?post_title=$encodedlink' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
 			}
