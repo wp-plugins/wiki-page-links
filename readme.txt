@@ -2,9 +2,9 @@
 Contributors: Darcy Casselman, Fremen
 Donate link: http://www.flyingsquirrel.ca/index.php/wordpress-plugins/wiki-links/
 Tags: wiki, pages
-Requires at least: 2.1
-Tested up to: 2.7.1
-Stable tag: 0.2
+Requires at least: 3.0
+Tested up to: 3.1.3
+Stable tag: 0.3
 
 [[Wiki Page Links]] is a WordPress plug-in that allows you to add Wikipedia-style hyperlinks to your posts and pages and automatically have them link to your WordPress pages.
 
@@ -24,7 +24,7 @@ You'd see this output:
 
 * You can provide a list of link templates for adding links to other sites, such as Wikipedia.  Eg. if you specify [[wiki:Hyperlinks]], you get a link to the corresponding Wikipedia page.
 * Wikipedia-style pipe (|) aliasing.
-* If a page doesn't exist, you'll see a link ("[?]") to create a new page.
+* If a page doesn't exist and the user is logged in, you'll see a link ("[?]") to create a new page.
 
 #### Features TODO: ####
 
