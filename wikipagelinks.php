@@ -119,9 +119,10 @@ class WikiLinksPlugin {
 				$content = str_replace($match, 
 					"<a href='". get_permalink($page->ID) ."'>$page_title</a>",
 					$content);
-			} else if ( $is_user_logged_in() ) {{
+			} else if ( $is_user_logged_in() ) {
 				//Add a link to create the page if it doesn't exist.
 				//TODO: limit showing the link to users who can create posts.
+
 				$home = get_option('siteurl');
 				$encodedlink = urlencode($link);
 				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/post-new.php?post_type=page&post_title=$encodedlink' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
