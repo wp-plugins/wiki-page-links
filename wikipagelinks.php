@@ -4,10 +4,10 @@ Plugin Name: Wiki Page Links
 Plugin URI: http://www.flyingsquirrel.ca/index.php/wordpress-plugins/wiki-links/
 Description: Automatically links to pages, wiki-style.
 Author: Darcy Casselman
-Version: 0.3
+Version: 0.4
 Author URI: http://www.flyingsquirrel.ca/
 
-    Copyright 2008  Darcy Casselman  (email : dscassel@gmail.com)
+    Copyright 2008-2011  Darcy Casselman  (email : dscassel@gmail.com)
 
 	This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -242,11 +242,5 @@ class WikiLinksPlugin {
 if (class_exists(WikiLinksPlugin) && !isset($wikiLinks_plugin)) {
     $wikiLinks_plugin = new WikiLinksPlugin();    
 }
-
-
-
-
-
-
 
 ?>
