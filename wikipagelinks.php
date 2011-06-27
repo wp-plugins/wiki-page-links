@@ -4,7 +4,7 @@ Plugin Name: Wiki Page Links
 Plugin URI: http://www.flyingsquirrel.ca/index.php/wordpress-plugins/wiki-links/
 Description: Automatically links to pages, wiki-style.
 Author: Darcy Casselman
-Version: 0.1
+Version: 0.2
 Author URI: http://www.flyingsquirrel.ca/
 
     Copyright 2008  Darcy Casselman  (email : dscassel@gmail.com)
@@ -119,13 +119,17 @@ class WikiLinksPlugin {
 				$content = str_replace($match, 
 					"<a href='". get_permalink($page->ID) ."'>$page_title</a>",
 					$content);
-			} else {
+			} else if ( is_user_logged_in() ) {
 				//Add a link to create the page if it doesn't exist.
-				//TODO: Hide/give the option to hide link for non-logged in 
-				//users.
-				$home = get_option('home');
+				//TODO: limit showing the link to users who can create posts.
+
+				$home = get_option('siteurl');
 				$encodedlink = urlencode($link);
-				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/page-new.php?post_title=$encodedlink' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
+				$content = str_replace($match, "{$page_title}[<a href='$home/wp-admin/post-new.php?post_type=page&post_title=$encodedlink' class='nonexistant_page' title='Create this page (requires a valid \"contributer\" account)'>?</a>]", $content);
+
+			} else {
+				
+				$content = str_replace($match, $page_title, $content);
 			}
 		}
 		
